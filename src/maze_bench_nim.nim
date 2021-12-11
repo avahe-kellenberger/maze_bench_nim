@@ -16,12 +16,16 @@ var now = getMonoTime()
 
 let maze = newSeq2D[bool](image.width, image.height)
 
+var
+  column: int
+  row: int
 for i, rgba in image.data:
-  let
-    x = i mod image.width
-    y = i div image.height
-  
-  maze[x, y] = rgba.r > 0 or rgba.g > 0 or rgba.b > 0
+  maze[column, row] = rgba.r > 0 or rgba.g > 0 or rgba.b > 0
+  if column + 1 >= image.width:
+    column = 0
+    row += 1
+  else:
+    column += 1
 
 echo fmt"Transformed image into maze in {getMonoTime() - now}"
 

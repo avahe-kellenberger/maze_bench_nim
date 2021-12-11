@@ -13,3 +13,6 @@ bin           = @["maze_bench_nim"]
 requires "nim >= 1.6.0"
 requires "pixie >= 3.0.4"
 
+task benchmark, "Runs the benchmark":
+  exec "nim r -d:danger --opt:speed --gc:arc src/maze_bench_nim.nim"
+
