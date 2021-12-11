@@ -20,7 +20,7 @@ var
   column: int
   row: int
 for i, rgba in image.data:
-  maze[column, row] = rgba.r > 0 or rgba.g > 0 or rgba.b > 0
+  maze[column, row] = (rgba.r + rgba.g + rgba.b) > 0
   if column + 1 >= image.width:
     column = 0
     row += 1
@@ -30,8 +30,8 @@ for i, rgba in image.data:
 echo fmt"Transformed image into maze in {getMonoTime() - now}"
 
 const 
-  start = newPoint(0, 1)
-  finish = newPoint(2000, 1999)
+  start: Point = (0, 1)
+  finish: Point = (2000, 1999)
 
 echo fmt"Solving maze from ({start.x}, {start.y}) to ({finish.x}, {finish.y}) ..."
 # Test "cold"
@@ -41,7 +41,7 @@ let coldTime = getMonoTime() - now
 
 # Warm up
 for _ in 0..1000:
-  success = maze.isReachable(start, finish)
+  discard maze.isReachable(start, finish)
 
 # Test "warm"
 now = getMonoTime()

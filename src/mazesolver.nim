@@ -26,7 +26,7 @@ proc isReachable*(maze: Seq2D[bool], start, finish: Point): bool =
       let left = p.x - 1
       if not visited[left, p.y] and maze[left, p.y]:
         # Go left
-        stack.add newPoint(left, p.y)
+        stack.add((left, p.y))
         visited[left, p.y] = true
 
     # Check right
@@ -34,7 +34,7 @@ proc isReachable*(maze: Seq2D[bool], start, finish: Point): bool =
       let right = p.x + 1
       if not visited[right, p.y] and maze[right, p.y]:
         # Go right
-        stack.add newPoint(right, p.y)
+        stack.add((right, p.y))
         visited[right, p.y] = true
 
     # Check up
@@ -42,7 +42,7 @@ proc isReachable*(maze: Seq2D[bool], start, finish: Point): bool =
       let up = p.y - 1
       if not visited[p.x, up] and maze[p.x, up]:
         # Go up
-        stack.add newPoint(p.x, up)
+        stack.add((p.x, up))
         visited[p.x, up] = true
 
     # Check down
@@ -50,7 +50,7 @@ proc isReachable*(maze: Seq2D[bool], start, finish: Point): bool =
       let down = p.y + 1
       if not visited[p.x, down] and maze[p.x, down]:
         # Go down
-        stack.add newPoint(p.x, down)
+        stack.add((p.x, down))
         visited[p.x, down] = true
 
     if stack.len == 0:
