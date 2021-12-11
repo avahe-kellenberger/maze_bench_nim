@@ -9,3 +9,9 @@ then run the following:
 
 `nimble benchmark`
 
+# Same benchmark in other languages
+
+[Rust](https://github.com/BTOdell/maze_bench_rs)
+
+[C++](https://github.com/BTOdell/maze-bench-cpp)
+
