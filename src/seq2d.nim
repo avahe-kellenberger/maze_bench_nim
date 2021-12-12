@@ -23,7 +23,7 @@ proc `[]`*[T](this: Seq2D[T], x, y: int): T =
     if x >= this.width:
       raise newException(Exception, fmt"x value of {x} outside bounds")
     if y >= this.height:
-      raise newException(Exception, fmt"x value of {x} outside bounds")
+      raise newException(Exception, fmt"y value of {y} outside bounds")
   return this.data[x + this.width * y]
 
 proc `[]=`*[T](this: Seq2D[T], x, y: int, t: T) =
@@ -31,6 +31,6 @@ proc `[]=`*[T](this: Seq2D[T], x, y: int, t: T) =
     if x >= this.width:
       raise newException(Exception, fmt"x value of {x} outside bounds")
     if y >= this.height:
-      raise newException(Exception, fmt"x value of {x} outside bounds")
+      raise newException(Exception, fmt"y value of {y} outside bounds")
   this.data[x + this.width * y] = t
 
