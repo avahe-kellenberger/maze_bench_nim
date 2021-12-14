@@ -2,17 +2,17 @@ import
   seq2d,
   point
 
-proc isReachable*(maze: Seq2D[bool], start, finish: Point): bool =
+proc isReachable*(maze: var Seq2D[bool], start, finish: Point): bool =
   let
     width = maze.width
     widthM1 = width - 1
     height = maze.height
     heightM1 = height - 1
-    visited = newSeq2D[bool](width, height)
 
   var
     stack = newSeq[Point]()
     p: Point = start
+    visited = newSeq2D[bool](width, height)
 
   visited[start.x, start.y] = true
 

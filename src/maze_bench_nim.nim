@@ -13,9 +13,10 @@ proc main() =
   echo fmt"Loaded image: {image.width} x {image.height}"
 
   echo "Transforming image into maze..."
-  var now = getMonoTime()
 
-  let maze = newSeq2D[bool](image.width, image.height)
+  var
+    now = getMonoTime()
+    maze = newSeq2D[bool](image.width, image.height)
 
   var
     column: int
@@ -30,7 +31,7 @@ proc main() =
 
   echo fmt"Transformed image into maze in {getMonoTime() - now}"
 
-  const 
+  const
     start: Point = (0, 1)
     finish: Point = (2000, 1999)
 

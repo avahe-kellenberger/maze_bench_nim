@@ -1,7 +1,7 @@
 when not defined(danger):
   import strformat
 
-type Seq2D*[T] = ref object
+type Seq2D*[T] = object
   data: seq[T]
   width: int
   height: int
@@ -26,7 +26,7 @@ proc `[]`*[T](this: Seq2D[T], x, y: int): T =
       raise newException(Exception, fmt"y value of {y} outside bounds")
   return this.data[x + this.width * y]
 
-proc `[]=`*[T](this: Seq2D[T], x, y: int, t: T) =
+proc `[]=`*[T](this: var Seq2D[T], x, y: int, t: T) =
   when not defined(danger):
     if x >= this.width:
       raise newException(Exception, fmt"x value of {x} outside bounds")
