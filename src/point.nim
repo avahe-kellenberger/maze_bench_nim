@@ -1,1 +1,1 @@
-type Point* = tuple[x: int, y: int]
+type Point* = tuple[i: int, x: int, y: int]

@@ -1,36 +1,28 @@
-when not defined(danger):
-  import strformat
+type
+  Seq2D* = object
+    width*,height*:int
+    data:seq[set[uint8]]
 
-type Seq2D*[T] = object
-  data: seq[T]
-  width: int
-  height: int
-
-proc newSeq2D*[T](width, height: int): Seq2D[T] =
-  result = Seq2D[T]()
-  result.data = newSeq[T](width * height)
+proc newSeq2D*(width,height:int):Seq2D{.inline.} =
   result.width = width
   result.height = height
+  let len = width*height div 256 + 1
+  result.data = newSeq[set[uint8]](len)
 
-template `width`*[T](this: Seq2D[T]): int =
-  this.width
+func `[]`*(b:Seq2D,idx:int):bool{.inline.} = 
+  (idx mod 256).uint8 in b.data[idx div 256]
 
-template `height`*[T](this: Seq2D[T]): int =
-  this.height
+func `[]=`*(b:var Seq2D,idx:int,val:bool){.inline.} =
+  let
+    x = idx div 256
+    y = uint8(idx mod 256)
+  if val:
+    b.data[x].incl y
+  else:
+    b.data[x].excl y
 
-proc `[]`*[T](this: Seq2D[T], x, y: int): T {.inline.} =
-  when not defined(danger):
-    if x >= this.width:
-      raise newException(Exception, fmt"x value of {x} outside bounds")
-    if y >= this.height:
-      raise newException(Exception, fmt"y value of {y} outside bounds")
-  return this.data[x + this.width * y]
-
-proc `[]=`*[T](this: var Seq2D[T], x, y: int, t: T) {.inline.} =
-  when not defined(danger):
-    if x >= this.width:
-      raise newException(Exception, fmt"x value of {x} outside bounds")
-    if y >= this.height:
-      raise newException(Exception, fmt"y value of {y} outside bounds")
-  this.data[x + this.width * y] = t
-
+func `[]=`*(b:var Seq2D,idx:int,val:static bool){.inline.} =
+  when val:
+    b.data[idx div 256].incl (idx mod 256).uint8
+  else:
+    b.data[idx div 256].excl (idx mod 256).uint8

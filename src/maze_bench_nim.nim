@@ -14,26 +14,19 @@ proc main() =
 
   echo "Transforming image into maze..."
 
-  var
+  var 
     now = getMonoTime()
-    maze = newSeq2D[bool](image.width, image.height)
-
-  var
-    column: int
-    row: int
+    maze = newSeq2D(image.width, image.height)
+  
   for i, rgba in image.data:
-    maze[column, row] = (rgba.r + rgba.g + rgba.b) > 0
-    if column + 1 >= image.width:
-      column = 0
-      row += 1
-    else:
-      column += 1
-
+    maze[i] = (rgba.r + rgba.g + rgba.b) > 0
+ 
   echo fmt"Transformed image into maze in {getMonoTime() - now}"
 
-  const
-    start: Point = (0, 1)
-    finish: Point = (2000, 1999)
+  func toIdx(p:(int,int)):Point = (p[0] + p[1] * image.width,p[0],p[1])
+  let
+    start = (0, 1).toIdx
+    finish = (2000, 1999).toIdx
 
   echo fmt"Solving maze from ({start.x}, {start.y}) to ({finish.x}, {finish.y}) ..."
   # Test "cold"
